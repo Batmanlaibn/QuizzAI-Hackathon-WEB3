@@ -44,9 +44,17 @@ IMPORTANT CATEGORY ENFORCEMENT:
 - DO NOT mix categories when a specific category is requested
 
 DIFFICULTY DISTRIBUTION:  
-- 40% easy (4 questions)
-- 40% medium (4 questions)
-- 20% hard (2 questions)
+When user requests a SPECIFIC difficulty (easy, medium, or hard):
+- ALL 10 questions MUST be of that difficulty level ONLY
+- The "difficulty" field in EVERY question MUST match the requested difficulty
+- If user requests "easy", ALL 10 questions must be easy difficulty
+- If user requests "medium", ALL 10 questions must be medium difficulty
+- If user requests "hard", ALL 10 questions must be hard difficulty
+
+When user requests MIXED difficulty (or default):
+- 4 questions MUST be easy
+- 4 questions MUST be medium
+- 2 questions MUST be hard
 
 DIFFICULTY DEFINITIONS:  
 easy = basic objective facts  

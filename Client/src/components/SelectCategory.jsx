@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 
-const SelectCategory = ({ categories, selectedCategory, onSelectCategory, onStart, onBack }) => {
+const SelectCategory = ({ 
+    categories, 
+    selectedCategory, 
+    onSelectCategory, 
+    difficulties,
+    selectedDifficulty,
+    onSelectDifficulty,
+    onStart, 
+    onBack 
+}) => {
     const [stakeAmount, setStakeAmount] = useState('');
 
     const handleStakeChange = (e) => {
@@ -22,6 +31,19 @@ const SelectCategory = ({ categories, selectedCategory, onSelectCategory, onStar
                         onClick={() => onSelectCategory(cat)}
                     >
                         {cat}
+                    </button>
+                ))}
+            </div>
+
+            <h2>Select Difficulty</h2>
+            <div className="category-grid difficulty-grid">
+                {difficulties.map(diff => (
+                    <button 
+                        key={diff} 
+                        className={`category-btn ${selectedDifficulty === diff ? 'active' : ''}`}
+                        onClick={() => onSelectDifficulty(diff)}
+                    >
+                        {diff}
                     </button>
                 ))}
             </div>

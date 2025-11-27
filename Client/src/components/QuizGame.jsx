@@ -18,9 +18,11 @@ const QuizGame = () => {
     const [quizHistory, setQuizHistory] = useState([]);
 
     const [selectedCategory, setSelectedCategory] = useState('Mixed');
+    const [selectedDifficulty, setSelectedDifficulty] = useState('Mixed');
     const [view, setView] = useState('home'); // home, category, playing, result
     
     const categories = ['Mixed', 'Science', 'History', 'Geography', 'Technology', 'Space', 'Pop Culture', 'Mathematics'];
+    const difficulties = ['Mixed', 'Easy', 'Medium', 'Hard'];
 
     // Load state from localStorage on mount
     useEffect(() => {
@@ -54,6 +56,9 @@ const QuizGame = () => {
             if (parsed.selectedCategory) {
                 setSelectedCategory(parsed.selectedCategory);
             }
+            if (parsed.selectedDifficulty) {
+                setSelectedDifficulty(parsed.selectedDifficulty);
+            }
 
             // Restore view state if possible, otherwise infer
             if (parsed.quizData && !parsed.gameOver) {
@@ -82,10 +87,11 @@ const QuizGame = () => {
                 timeLeft,
                 endTime,
                 gameOver,
-                selectedCategory
+                selectedCategory,
+                selectedDifficulty
             }));
         }
-    }, [quizData, currentQuestionIndex, selectedAnswers, score, timeLeft, endTime, gameOver, selectedCategory]);
+    }, [quizData, currentQuestionIndex, selectedAnswers, score, timeLeft, endTime, gameOver, selectedCategory, selectedDifficulty]);
 
     const fetchQuiz = async () => {
         setLoading(true);
@@ -106,7 +112,10 @@ const QuizGame = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ category: selectedCategory }),
+                body: JSON.stringify({ 
+                    category: selectedCategory,
+                    difficulty: selectedDifficulty 
+                }),
             });
             if (!response.ok) {
                 throw new Error('Failed to fetch quiz');
@@ -276,6 +285,9 @@ const QuizGame = () => {
                     categories={categories}
                     selectedCategory={selectedCategory}
                     onSelectCategory={setSelectedCategory}
+                    difficulties={difficulties}
+                    selectedDifficulty={selectedDifficulty}
+                    onSelectDifficulty={setSelectedDifficulty}
                     onStart={fetchQuiz}
                     onBack={() => setView('home')}
                 />

@@ -18,7 +18,7 @@ app.post('/api/quiz', async (req, res) => {
         const rulePath = path.join(__dirname, 'AI', 'Rule.txt');
         const systemPrompt = fs.readFileSync(rulePath, 'utf8');
 
-        const { category } = req.body;
+        const { category, difficulty } = req.body;
         
         // Add random seed for uniqueness
         const randomSeed = Date.now() + Math.random();
@@ -26,8 +26,15 @@ app.post('/api/quiz', async (req, res) => {
         if (category && category !== 'Mixed') {
             userPrompt = `Generate a completely new and unique quiz about ${category}. IMPORTANT: ALL 10 questions MUST be ONLY about ${category}. Do not include any other categories. Every question's "category" field must be "${category}". (seed: ${randomSeed})`;
         }
+        
+        // Add difficulty instruction
+        if (difficulty && difficulty !== 'Mixed') {
+            userPrompt += `\n\nDIFFICULTY REQUIREMENT: ALL 10 questions MUST be ${difficulty.toUpperCase()} difficulty ONLY. Every question's "difficulty" field must be "${difficulty.toLowerCase()}".`;
+        } else {
+            userPrompt += `\n\nDIFFICULTY REQUIREMENT: Use mixed difficulty with the standard distribution (4 easy, 4 medium, 2 hard questions).`;
+        }
 
-        console.log(`Generating quiz for category: ${category || 'Mixed'}`);
+        console.log(`Generating quiz for category: ${category || 'Mixed'}, difficulty: ${difficulty || 'Mixed'}`);
 
         const completion = await groq.chat.completions.create({
             messages: [
