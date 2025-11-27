@@ -7,7 +7,7 @@ const WalletConnect = ({ onConnect, onSkip }) => {
     const [hasInteracted, setHasInteracted] = useState(false);
     const initialConnectionRef = useRef(isConnected);
 
-    // Only auto-proceed if user connects AFTER opening this modal jjj
+    // Only auto-proceed if user connects AFTER opening this modal jjj jhvjhvjhvj
     useEffect(() => {
         if (hasInteracted && isConnected && address && !initialConnectionRef.current) {
             onConnect(address);
