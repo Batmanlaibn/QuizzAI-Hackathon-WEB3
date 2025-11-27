@@ -14,7 +14,7 @@ const WalletConnect = ({ onConnect, onSkip }) => {
         }
     }, [isConnected, address, onConnect, hasInteracted]);
 
-    // Track when user interacts with the connect button
+    // Track when user interacts with the connect button hgcjhchg
     const handleConnectClick = () => {
         setHasInteracted(true);
     };
